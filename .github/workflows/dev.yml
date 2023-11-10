@@ -9,6 +9,7 @@ on:
       config-file:
         description: Path to the config file containing your containers description
         default: 'latest'
+        required: true
         type: string
 
 
