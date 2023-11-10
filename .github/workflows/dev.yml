@@ -10,6 +10,10 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+      id-token: write
+      contents: read
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     # Inputs the workflow accepts.
@@ -18,7 +22,7 @@ on:
         # Friendly description to be shown in the UI instead of 'name'
         description: 'Please confirm the environment is : dev'
         # Default value if no value is explicitly provided
-        default: 'dev'
+        default: 'pouet'
         # Input has to be provided for the workflow to run
         required: true
         # The data type of the input
@@ -58,7 +62,7 @@ jobs:
         run: |
           az account show
 
-      - name: Read README.md
+      - name: Read container.txt
         id: package
         uses: jaywcjlove/github-action-read-file@main
         with:
@@ -67,7 +71,7 @@ jobs:
       - name: Echo container name
         run: echo "${{ steps.package.outputs.content }}"
 
-      - name: Build
+      - name: Create container inside storage account
         shell: pwsh
         run: |
           .\build.ps1 "${{ steps.package.outputs.content }}"
