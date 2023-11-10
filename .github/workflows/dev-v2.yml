@@ -4,25 +4,17 @@ name: Deploy containers to development environment
 # Controls when the workflow will run
 on:
 
-  # Triggers the workflow on push or pull request events but only for the $default-branch branch
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_call:
+    inputs:
+      config-file:
+        description: Path to the config file containing your containers description
+        default: 'latest'
+        required: true
+        type: string
+
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-    # Inputs the workflow accepts.
-    inputs:
-      name:
-        # Friendly description to be shown in the UI instead of 'name'
-        description: 'Please confirm the environment is : dev'
-        # Default value if no value is explicitly provided
-        default: 'pouet'
-        # Input has to be provided for the workflow to run
-        required: true
-        # The data type of the input
-        type: string
 
 permissions:
       id-token: write
@@ -60,16 +52,7 @@ jobs:
         run: |
           az account show
 
-      - name: Read container.txt
-        id: package
-        uses: jaywcjlove/github-action-read-file@main
-        with:
-          path: dev/container.txt
-
-      - name: Echo container name
-        run: echo "${{ steps.package.outputs.content }}"
-
       - name: Create container inside storage account
         shell: pwsh
         run: |
-          dev/build.ps1 ${{ steps.package.outputs.content }}
+          dev/build.ps1 ${{ inputs.config-path }}
