@@ -1,5 +1,5 @@
 # This is a basic workflow to help you get started with Actions
-name: Deploy containers to development environment
+name: Deploy containers to dev
 
 # Controls when the workflow will run
 on:
