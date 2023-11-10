@@ -43,11 +43,12 @@ jobs:
         run: |
           echo DEV Add other actions to build,
           echo DEV test, and deploy your project.
-
-      - name: Read package.json
+      
+      - name: Read README.md
         id: package
-        uses: juliangruber/read-file-action@v1
+        uses: jaywcjlove/github-action-read-file@main
         with:
-          path: ../../dev/dev.tst
+          path: dev.tst
+
       - name: Echo dev.tst
-        run: echo "${{ steps.package.outputs.content }}
+        run: echo "${{ steps.package.outputs.content }}"
