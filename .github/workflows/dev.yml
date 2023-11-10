@@ -48,6 +48,6 @@ jobs:
         id: package
         uses: juliangruber/read-file-action@v1
         with:
-          path: /dev/dev.tst
+          path: ../../dev/dev.tst
       - name: Echo dev.tst
         run: echo "${{ steps.package.outputs.content }}
