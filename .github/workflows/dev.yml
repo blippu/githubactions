@@ -16,9 +16,9 @@ on:
     inputs:
       name:
         # Friendly description to be shown in the UI instead of 'name'
-        description: 'Person to greet'
+        description: 'Please confirm the environment is : dev'
         # Default value if no value is explicitly provided
-        default: 'World'
+        default: 'dev'
         # Input has to be provided for the workflow to run
         required: true
         # The data type of the input
@@ -38,12 +38,16 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo DEV Hello, world!
-
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
           echo DEV Add other actions to build,
           echo DEV test, and deploy your project.
+
+      - name: Read package.json
+        id: package
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: /dev/dev.tst
+      - name: Echo dev.tst
+        run: echo "${{ steps.package.outputs.content }}
