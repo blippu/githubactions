@@ -1,1 +1,0 @@
-az storage fs create --account-name underwritingweu --auth-mode login --name $args[0]
