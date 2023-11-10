@@ -48,7 +48,7 @@ jobs:
         id: package
         uses: jaywcjlove/github-action-read-file@main
         with:
-          path: dev.tst
+          path: dev/dev.tst
 
       - name: Echo dev.tst
         run: echo "${{ steps.package.outputs.content }}"
