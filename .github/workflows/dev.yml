@@ -81,4 +81,6 @@ jobs:
       - name: Create container inside storage account
         shell: pwsh
         run: |
-          dev/build.ps1 ${{ steps.package.outputs.content }}
+          dev/build.ps1 ${{ inputs.config-path }}
+
+# dev/build.ps1 ${{ steps.package.outputs.content }}
