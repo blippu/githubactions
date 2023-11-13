@@ -50,7 +50,13 @@ jobs:
         run: |
           az account show
 
+      - name: Read container.txt
+        id: package
+        uses: jaywcjlove/github-action-read-file@main
+        with:
+          path: ${{ inputs.config-file }}
+
       - name: Create container inside storage account
         shell: pwsh
         run: |
-          dev/build.ps1 ${{ inputs.config-file }}
+          dev/build.ps1 ${{ steps.package.outputs.content }}
