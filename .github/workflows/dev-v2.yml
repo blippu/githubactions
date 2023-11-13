@@ -7,7 +7,6 @@ on:
   workflow_call:
     inputs:
       config-file:
-        #name: ttest
         description: Path to the config file containing your containers description
         default: 'latest'
         required: true
