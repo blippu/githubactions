@@ -84,8 +84,9 @@ jobs:
         uses: azure/login@v1
         with:
           client-id: ${{ vars.AZURE_CLIENT_ID }}
-          tenant-id: ${{ vars.AZURE_TENANT_ID }}
           subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+          #tenant-id: ${{ vars.AZURE_TENANT_ID }} 32483e40-3c09-434a-be1b-b9e262bfaaef
+          tenant-id: '32483e40-3c09-434a-be1b-b9e262bfaaef'
 
       - name: Read container.txt
         id: package
