@@ -1,0 +1,87 @@
+# This is a basic workflow to help you get started with Actions
+name: Parent workflow - deploy container from inputs
+
+# Controls when the workflow will run
+on:
+  workflow_call:
+    inputs:
+      config-file:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: string
+      granularity:
+        required: true
+        type: string      
+
+permissions:
+      id-token: write
+      contents: read
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+  deploy-with-security-groups-at-storage-account-level:
+    # The type of runner that the job will run on
+    runs-on: [self-hosted, X64, Linux, azure]
+
+    environment:
+      name: ${{ inputs.environment }}
+    
+    if: ${{ inputs.granularity  == 'storage account'}}
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Display scenario
+        run: |
+          echo Deploy to ${{ inputs.environment }} with security groups at storage account level
+
+      # Login via Fed id service principal linked to my repo and my environment
+      - name: 'Az CLI login'
+        uses: azure/login@v1
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+          #tenant-id: ${{ vars.AZURE_TENANT_ID }} 32483e40-3c09-434a-be1b-b9e262bfaaef
+          tenant-id: '32483e40-3c09-434a-be1b-b9e262bfaaef'   
+
+      - name: Create containers inside storage account
+        shell: pwsh
+        run: |
+          resources/adls/deploy_dataset.ps1 ${{ inputs.config-file }}      
+  
+  deploy-with-security-groups-at-container-level:
+    # The type of runner that the job will run on
+    runs-on: [self-hosted, X64, Linux, azure]
+
+    environment:
+      name: ${{ inputs.environment }}
+
+    if: ${{ inputs.granularity  == 'container'}}
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Display scenario
+        run: |
+          echo Deploy to ${{ inputs.environment }} with security groups at container level
+
+      # Login via Fed id service principal linked to my repo and my environment
+      - name: 'Az CLI login'
+        uses: azure/login@v1
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+          #tenant-id: ${{ vars.AZURE_TENANT_ID }} 32483e40-3c09-434a-be1b-b9e262bfaaef
+          tenant-id: '32483e40-3c09-434a-be1b-b9e262bfaaef'
+      
+      - name: Create containers inside storage account
+        shell: pwsh
+        run: |
+            resources/adls/deploy_dataset.ps1 ${{ inputs.config-file }}  
+
+
