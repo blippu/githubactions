@@ -38,6 +38,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
+      - name: Run a multi-line script
+        run: |
+          echo Deploy to ${{ inputs.environment }} with security groups at storage account level
+
       # Login via Fed id service principal linked to my repo and my environment
       - name: 'Az CLI login'
         uses: azure/login@v1
@@ -52,10 +56,39 @@ jobs:
         with:
           path: ${{ inputs.config-file }}
       
-      - name: Run a multi-line script
-        run: |
-          echo Deploy to ${{ inputs.environment }} with security groups at storage account level
+
       - name: Create container inside storage account
         shell: pwsh
         run: |
           dev/build.ps1 ${{ steps.package.outputs.content }}      
+    
+    if: ${{ inputs.granularity  == 'container'}}
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Run a multi-line script
+        run: |
+          echo Deploy to ${{ inputs.environment }} with security groups at storage account level
+
+      # Login via Fed id service principal linked to my repo and my environment
+      - name: 'Az CLI login'
+        uses: azure/login@v1
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Read container.txt
+        id: package
+        uses: jaywcjlove/github-action-read-file@main
+        with:
+          path: ${{ inputs.config-file }}
+      
+      - name: Create container inside storage account
+        shell: pwsh
+        run: |
+          dev/build.ps1 ${{ steps.package.outputs.content }}  
+
+
