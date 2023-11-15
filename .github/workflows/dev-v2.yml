@@ -51,10 +51,10 @@ jobs:
         with:
           path: ${{ inputs.config-file }}
 
-      #if: ${{ inputs.granularity  == 'storage account'}}
-      #- name: Run a multi-line script
-      #  run: |
-      #    echo Deploy to ${{ inputs.environment }} with security groups at storage account level
+      if: ${{ inputs.granularity  == 'storage account'}}
+      - name: Run a multi-line script
+        run: |
+          echo Deploy to ${{ inputs.environment }} with security groups at storage account level
       - name: Create container inside storage account
         shell: pwsh
         run: |
