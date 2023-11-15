@@ -83,5 +83,3 @@ jobs:
         shell: pwsh
         run: |
             resources/adls/deploy_dataset.ps1 ${{ inputs.config-file }}  
-
-
