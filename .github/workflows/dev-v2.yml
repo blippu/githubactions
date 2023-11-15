@@ -11,6 +11,9 @@ on:
       environment:
         required: true
         type: string
+      granularity:
+        required: true
+        type: string      
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -48,7 +51,23 @@ jobs:
         with:
           path: ${{ inputs.config-file }}
 
+      if: ${{ inputs.granularity  == 'storage account'}}
+      - name: Run a multi-line script
+        run: |
+          echo Deploy to ${{ inputs.environment }} with security groups at storage account level
       - name: Create container inside storage account
         shell: pwsh
         run: |
           dev/build.ps1 ${{ steps.package.outputs.content }}
+
+      if: ${{ inputs.granularity  == 'container'}}
+      - name: Run a multi-line script
+        run: |
+          echo Deploy to ${{ inputs.environment }} with security groups at container level
+      - name: Create container inside storage account
+        shell: pwsh
+        run: |
+          dev/build.ps1 ${{ steps.package.outputs.content }}
+
+
+          
