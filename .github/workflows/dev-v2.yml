@@ -77,7 +77,7 @@ jobs:
 
       - name: Run a multi-line script
         run: |
-          echo Deploy to ${{ inputs.environment }} with security groups at storage account level
+          echo Deploy to ${{ inputs.environment }} with security groups at container level
 
       # Login via Fed id service principal linked to my repo and my environment
       - name: 'Az CLI login'
