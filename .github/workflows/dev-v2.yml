@@ -1,9 +1,8 @@
 # This is a basic workflow to help you get started with Actions
-name: create container from inputs
+name: Parent workflow - deploy container from inputs
 
 # Controls when the workflow will run
 on:
-
   workflow_call:
     inputs:
       config-file:
