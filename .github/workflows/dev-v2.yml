@@ -60,7 +60,15 @@ jobs:
       - name: Create container inside storage account
         shell: pwsh
         run: |
-          dev/build.ps1 ${{ steps.package.outputs.content }}      
+          dev/build.ps1 ${{ steps.package.outputs.content }}
+
+      - name: Azure CLI script
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az logout
+            az cache purge
+            az account clear
   
   deploy-with-security-groups-at-container-level:
     # The type of runner that the job will run on
