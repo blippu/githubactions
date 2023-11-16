@@ -51,7 +51,7 @@ jobs:
       - name: Create containers inside storage account
         shell: pwsh
         run: |
-          resources/adls/deploy_dataset.ps1 ${{ inputs.config-file }}      
+          resources/adls/deploy_dataset_optional_granularity.ps1 ${{ inputs.config-file }}      
   
   deploy-with-security-groups-at-container-level:
     # The type of runner that the job will run on
