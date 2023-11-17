@@ -1,6 +1,7 @@
 name: "List env"
       
 on:
+  workflow_call:
 #  push:
 #    branches:
 #      - main
