@@ -1,0 +1,17 @@
+name: "List env"
+      
+on:
+#  push:
+#    branches:
+#      - main
+  
+  workflow_dispatch:
+
+jobs:
+  print-tag:
+    runs-on: ubuntu-latest
+    environment:
+      name: dev
+    steps:
+      - name: Print the environment variables
+        run: env
