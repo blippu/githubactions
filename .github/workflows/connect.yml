@@ -1,12 +1,12 @@
 name: "ADLS connectivity test"
       
 on:
-    workflow_dispatch:
-        inputs:
-          storage:
-            description: 'Please enter the storage account name' 
-            required: true
-            type: string
+  workflow_dispatch:
+    inputs:
+      storage:
+        description: 'Please enter the storage account name' 
+        required: true
+        type: string
 
 jobs:
   test-tcp-connection:
