@@ -6,6 +6,7 @@ on:
           storage:
             description: 'Please enter the storage account name' 
             required: true
+            type: string
 
 jobs:
   test-tcp-connection:
