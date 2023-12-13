@@ -9,7 +9,7 @@ on:
 
 jobs:
   test-tcp-connection:
-    runs-on: [self-hosted, X64, Linux, azure]
+    runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read        
