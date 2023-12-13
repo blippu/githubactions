@@ -1,0 +1,21 @@
+name: "ADLS connectivity test"
+      
+on:
+    workflow_dispatch:
+        inputs:
+          storage:
+            description: 'Please enter the storage account name' 
+            required: true
+
+jobs:
+  test-tcp-connection:
+    runs-on: [self-hosted, X64, Linux, azure]
+    permissions:
+      id-token: write
+      contents: read        
+
+      - name: Launch a connectivity test from gha private runners towards the storage account ports 443
+        shell: pwsh
+        run: |
+          Test-NetConnection -ComputerName ${{ inputs.storage }}.blob.core.windows.net -Port 443
+          Test-NetConnection -ComputerName ${{ inputs.storage }}.dfs.core.windows.net -Port 443
